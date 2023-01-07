@@ -17,6 +17,12 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['stores'],
   },
+  runtimeConfig: {
+    public: {
+      SUPABASE_URL: process.env.SUPABASE_URL,
+      SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
+    },
+  },
   css: [
     'vuetify/lib/styles/main.sass',
     '@mdi/font/css/materialdesignicons.css',

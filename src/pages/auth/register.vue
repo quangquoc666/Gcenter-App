@@ -14,6 +14,7 @@ const schema = {
 const dialog = ref(false)
 
 function onSubmitRegister(values: any) {
+  // eslint-disable-next-line no-console
   console.log(values)
 }
 </script>
@@ -32,7 +33,6 @@ function onSubmitRegister(values: any) {
               :validation-schema="schema"
               @submit="onSubmitRegister"
             >
-              <!-- This method uses Higher-order component API to validate vuetify inputs -->
               <Field
                 v-slot="{ field, errors }"
                 name="email"
