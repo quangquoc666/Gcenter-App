@@ -1,9 +1,7 @@
-<script setup lang="ts">
-const { globalState } = useGlobalStore()
-</script>
 <template>
   <div>
-    {{ globalState }}
-    <NuxtWelcome />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>

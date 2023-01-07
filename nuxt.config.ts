@@ -22,9 +22,6 @@ export default defineNuxtConfig({
     '@mdi/font/css/materialdesignicons.css',
   ],
   build: {
-    transpile: [
-      'vuetify',
-      /*  'vee-validate', */
-    ],
+    transpile: ['vuetify', 'vee-validate'],
   },
 })
