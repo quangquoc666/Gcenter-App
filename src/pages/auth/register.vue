@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/attribute-hyphenation -->
 <script setup lang="ts">
 import { Form, Field } from 'vee-validate'
 
@@ -12,7 +13,7 @@ const schema = {
 }
 
 const dialog = ref(false)
-
+const authError = ref(false)
 function onSubmitRegister(values: any) {
   // eslint-disable-next-line no-console
   console.log(values)
@@ -20,10 +21,8 @@ function onSubmitRegister(values: any) {
 </script>
 
 <template>
-  <v-container class="h-100">
-    <v-row class="h-100">
-      <v-col class="d-flex justify-center align-center h-100">
-        <v-card variant="outlined" width="340">
+  <div id="auth-body" class="d-flex flex-column justify-center align-center">
+    <v-card variant="outlined" width="340">
           <v-card-title class="mb-3 text-center"
             >ĐĂNG KÝ TÀI KHOẢN</v-card-title
           >
@@ -93,9 +92,7 @@ function onSubmitRegister(values: any) {
               </v-row>
             </Form>
           </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
+    </v-card>
     <v-dialog v-model="dialog" :scrim="false" persistent>
       <v-card color="primary">
         <v-card-text>
@@ -108,10 +105,21 @@ function onSubmitRegister(values: any) {
         </v-card-text>
       </v-card>
     </v-dialog>
-  </v-container>
+    <AuthAlert
+      :active=authError
+      icon="mdi-shield-lock-outline"
+      type="error"
+      text="Lỗi xác thực"
+    />
+  </div>
 </template>
 
 <style scoped>
+#auth-body {
+min-height: 100vh;
+min-width: 100vw;
+}
+
 #have-account {
   width: 100px;
 }
