@@ -1,27 +1,37 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+
 const props = defineProps({
   active: Boolean,
   icon: String,
-  type: String,
+  code: Number,
   text: String,
 })
-const active = ref(props.active)
+const AuthStore = useAuthStore()
+const { authError } = storeToRefs(AuthStore)
+
+const deactive = () => {
+  authError.value = null
+}
 </script>
 
 <template>
   <div class="px-4">
     <v-row justify="center">
-      <v-dialog v-model="active" persistent>
-        <v-alert :icon="false" :type="(props.type as any)">
+      <v-dialog v-model="props.active">
+        <v-alert :icon="false" type="error">
           <v-row class="flex-column" align="center">
             <v-col align="center"
               ><v-icon size="66">{{ props.icon }}</v-icon></v-col
             >
             <v-col align="center">
-              {{ props.text }}
+              <strong>Mã lỗi:</strong> {{ props.code }}
             </v-col>
             <v-col align="center">
-              <v-btn @click="active = false">Đóng</v-btn>
+              <strong>Mô tả:</strong> {{ props.text }}
+            </v-col>
+            <v-col align="center">
+              <v-btn @click="deactive">Đóng</v-btn>
             </v-col>
           </v-row>
         </v-alert>
