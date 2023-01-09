@@ -16,20 +16,29 @@ const AuthStore = useAuthStore()
 const { authError } = storeToRefs(AuthStore)
 
 const dialog = ref(false)
+const showActiveEmail = ref(false)
 
 const onSubmitRegister = async (values: any) => {
   dialog.value = true
+  await AuthStore.logout()
   await AuthStore.register(values.email, values.password)
-  setTimeout(() => {
+  if (!authError.value) {
     dialog.value = false
-  }, 1000)
-  console.log(values)
+    showActiveEmail.value = true
+  } else {
+    dialog.value = false
+  }
 }
 </script>
 
 <template>
   <div id="auth-body" class="d-flex flex-column justify-center align-center">
-    <v-card variant="outlined" width="340">
+    <v-card
+      v-if="!showActiveEmail"
+      variant="outlined"
+      width="340"
+      elevation="12"
+    >
       <v-card-title class="mb-3 text-center">ĐĂNG KÝ TÀI KHOẢN</v-card-title>
       <v-card-text>
         <Form
@@ -90,23 +99,22 @@ const onSubmitRegister = async (values: any) => {
         </Form>
       </v-card-text>
     </v-card>
+    <v-card
+      v-else
+      class="bg-green-darken-2"
+      variant="flat"
+      width="340"
+      elevation="12"
+    >
+      <v-card-title class="mb-3 text-center">ĐĂNG KÝ THÀNH CÔNG</v-card-title>
+      <v-card-text class="text-center text-body-1">
+        <p>Kiểm tra email để kích hoạt tài khoản !</p>
+        <br />
+        <p>
+          Nếu không tìm thấy mail từ Gcenter, hãy thử tìm ở mục Spam, Thư rác
+        </p>
+      </v-card-text>
+    </v-card>
     <GlobalDialogLoading :dialog="dialog" text="Tiến hành đăng ký ..." />
-    <GlobalAlertError
-      :active="!!authError"
-      icon="mdi-shield-lock-outline"
-      :status="authError?.status"
-      :text="authError?.message"
-    />
   </div>
 </template>
-
-<style scoped>
-#auth-body {
-  min-height: 100vh;
-  min-width: 100vw;
-}
-
-#have-account {
-  width: 100px;
-}
-</style>
