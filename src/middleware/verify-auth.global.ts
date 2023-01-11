@@ -1,5 +1,6 @@
-export default defineNuxtRouteMiddleware(() => {
-  const AuthStore = useAuthStore()
-  const token = useCookie('token').value
-  AuthStore.verifyAuth(token)
+export default defineNuxtRouteMiddleware(async () => {
+  await new Promise((resolve) => setTimeout(resolve, 50))
+  const token = useCookie('token') || null
+  const { verifyAuth } = useAuthStore()
+  await verifyAuth(token.value)
 })
